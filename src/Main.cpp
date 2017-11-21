@@ -13,14 +13,33 @@ using std::endl;
 #include "x86/cpu_x86.h"
 using namespace FeatureDetector;
 
+void WriteFeature(bool feature, char* visual, bool &has)
+{
+	if (feature)
+	{
+		if (has) { cout << ", "; }
+		cout << visual;
+		has = true;
+	}
+}
+
 int main(){
 
-    cout << "CPU Vendor String: " << cpu_x86::get_vendor_string() << endl;
-    cout << endl;
+	// detect CPU features
+	cpu_x86 features;
+	features.detect_host();
 
-    cpu_x86::print_host();
-
-#if _WIN32
-    system("pause");
-#endif
+	// output main CPU features
+	cout << "Features: ";
+	bool has = false;
+	WriteFeature(features.HW_MMX, "MMX", has);
+	WriteFeature(features.HW_SSE, "SSE", has);
+	WriteFeature(features.HW_SSE2, "SSE2", has);
+	WriteFeature(features.HW_SSE42, "SSE42", has);
+	WriteFeature(features.HW_AES, "AES", has);
+	WriteFeature(features.HW_SHA, "SHA", has);
+	WriteFeature(features.HW_AVX && features.OS_AVX, "AVX", has);
+	WriteFeature(features.HW_AVX2 && features.OS_AVX, "AVX2", has);
+	WriteFeature(features.HW_AVX512_F && features.OS_AVX512, "AVX512", has);
+	cout << endl;
 }
