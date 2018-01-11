@@ -89,7 +89,7 @@ std::string cpu_x86::get_vendor_string(){
     return name;
 }
 std::string cpu_x86::get_arch() {
-    if (detect_OS_x64) {
+    if (detect_OS_x64()) {
         return "x86";
     } else {
         return "i686";
