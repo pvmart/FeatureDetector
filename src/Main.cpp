@@ -30,7 +30,7 @@ int main(){
 	features.detect_host();
 
 	// output main CPU features
-	cout << "Features: ";
+	cout << "Features: " << cpu_x86::get_arch() << ", ";
 	bool has = false;
 	WriteFeature(features.HW_MMX, "MMX", has);
 	WriteFeature(features.HW_SSE, "SSE", has);
